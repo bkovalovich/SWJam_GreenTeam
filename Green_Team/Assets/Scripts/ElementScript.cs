@@ -8,7 +8,12 @@ enum ElementType {
     Clay,
 }
 
-abstract class ElementScript : MonoBehaviour
+class ElementScript : MonoBehaviour
 {
     protected ElementType element;
+
+    public ElementType Element {
+        get { return element; }
+        set { element = value; }
+    }
 }
