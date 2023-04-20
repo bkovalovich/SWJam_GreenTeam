@@ -9,7 +9,7 @@ public class PlayerJumpScript : MonoBehaviour {
     public PlayerInputActions playerControls;
     private InputAction jump;
     public float jumpSpeed;
-    private bool canJump;
+    public static bool canJump;
     private void Awake() {
         rb = GetComponentInParent<Rigidbody2D>();
         playerControls = new PlayerInputActions();

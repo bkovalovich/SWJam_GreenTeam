@@ -7,7 +7,8 @@ public class PlayerMovementScript : MonoBehaviour
 {
     private Rigidbody2D rb;
     //PLAYER MOVEMENT STATS
-    public float moveSpeed;
+    public float groundVertSpeed, jumpVertSpeed;
+    private float currentVertSpeed;
     private Vector2 moveDirection = Vector2.zero;
     //INPUT SYSTEM
     public PlayerInputActions playerControls;    
@@ -32,7 +33,11 @@ public class PlayerMovementScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //Debug.Log(moveDirection);
-        rb.AddForce(moveDirection * moveSpeed * Time.deltaTime);
+        if (!PlayerJumpScript.canJump) {
+            currentVertSpeed = jumpVertSpeed;
+        } else {
+            currentVertSpeed = groundVertSpeed;
+        }
+        rb.AddForce(moveDirection * currentVertSpeed * Time.deltaTime);
     }
 }

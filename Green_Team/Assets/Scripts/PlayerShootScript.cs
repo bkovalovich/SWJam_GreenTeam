@@ -37,8 +37,7 @@ public class PlayerShootScript : MonoBehaviour
     }
 
     public void ShootFireProjectile(InputAction.CallbackContext context) {
-        Debug.Log("Fire shot");
-        PlayerAttackScript.Create(ElementType.Mud, bullet, firePoint);
+        PlayerAttackScript.Create(ElementType.Fire, bullet, firePoint);
     }
     public void ShootMudProjectile(InputAction.CallbackContext context) {
         PlayerAttackScript.Create(ElementType.Mud, bullet, firePoint);
