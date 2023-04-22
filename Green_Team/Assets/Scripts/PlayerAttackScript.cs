@@ -28,14 +28,17 @@ class PlayerAttackScript : ElementScript {
     }
     public void ChangeColor() {
         if (element == ElementType.Fire) {
+            gameObject.tag = "Fire";
             Debug.Log(element);
             sr.sprite = fire;
         } else if (element == ElementType.Mud) {
+            gameObject.tag = "Mud";
             Debug.Log(element);
             sr.sprite = mud;
         }
         else
         {
+            gameObject.tag = "Clay";
             Debug.Log(element);
             sr.sprite = clay;
         }
