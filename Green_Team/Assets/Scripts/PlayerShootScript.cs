@@ -26,6 +26,10 @@ public class PlayerShootScript : MonoBehaviour
         shootMud = playerControls.Player.RightPressed;
         shootMud.Enable();
         shootMud.performed += ShootMudProjectile;
+        //Middle Click
+        shootClay = playerControls.Player.MiddlePressed;
+        shootClay.Enable();
+        shootClay.performed += ShootClayProjectile;
     }
     private void OnDisable() {
         shootFire.Disable();
@@ -42,5 +46,8 @@ public class PlayerShootScript : MonoBehaviour
     }
     public void ShootMudProjectile(InputAction.CallbackContext context) {
         PlayerAttackScript.Create(ElementType.Mud, bullet, mudFirePoint);
+    }
+    public void ShootClayProjectile(InputAction.CallbackContext context) {
+        PlayerAttackScript.Create(ElementType.Clay, bullet, fireFirePoint);
     }
 }

@@ -6,6 +6,10 @@ class PlayerAttackScript : ElementScript {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
+    public Sprite mud;
+    public Sprite fire;
+    public Sprite clay;
+
     public Vector2 projectileDirection;
     public float projectileSpeed;
 
@@ -25,10 +29,15 @@ class PlayerAttackScript : ElementScript {
     public void ChangeColor() {
         if (element == ElementType.Fire) {
             Debug.Log(element);
-            sr.material.color = Color.red;
+            sr.sprite = fire;
         } else if (element == ElementType.Mud) {
             Debug.Log(element);
-            sr.material.color = Color.black;
+            sr.sprite = mud;
+        }
+        else
+        {
+            Debug.Log(element);
+            sr.sprite = clay;
         }
     }
     private void Awake() {
@@ -39,6 +48,7 @@ class PlayerAttackScript : ElementScript {
     private void OnEnable() {
         projectileDirection = CrosshairScript.crosshairPosition - transform.position;
         rb.velocity =  projectileDirection.normalized * projectileSpeed;
+        Destroy(gameObject, 3f);
     }
     private void OnDisable() {
         //
@@ -46,4 +56,5 @@ class PlayerAttackScript : ElementScript {
     private void OnCollisionEnter2D(Collision2D collision) {
         //
     }
+
 }
