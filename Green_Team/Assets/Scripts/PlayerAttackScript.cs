@@ -5,9 +5,14 @@ using UnityEngine;
 class PlayerAttackScript : ElementScript {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    public Vector2 projectileMotion;
+
+    public Vector2 projectileDirection;
+    public float projectileSpeed;
+
+
     public float lifetime;
     private float currentLife;
+    private Camera cam;
     
     public static GameObject bullet;
     public static PlayerAttackScript Create(ElementType element, GameObject bullet, Transform firepoint) {
@@ -29,9 +34,11 @@ class PlayerAttackScript : ElementScript {
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     private void OnEnable() {
-        rb.AddForce(projectileMotion);
+        projectileDirection = CrosshairScript.crosshairPosition - transform.position;
+        rb.velocity =  projectileDirection.normalized * projectileSpeed;
     }
     private void OnDisable() {
         //

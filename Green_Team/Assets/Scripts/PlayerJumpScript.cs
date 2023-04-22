@@ -10,6 +10,11 @@ public class PlayerJumpScript : MonoBehaviour {
     private InputAction jump;
     public float jumpSpeed;
     public static bool canJump;
+
+    //ADDED
+    public Animator anim;
+
+
     private void Awake() {
         rb = GetComponentInParent<Rigidbody2D>();
         playerControls = new PlayerInputActions();
@@ -26,6 +31,9 @@ public class PlayerJumpScript : MonoBehaviour {
         if (canJump) {
             rb.AddForce(Vector3.up * jumpSpeed);
             canJump = false;
+
+            //ADDED set animator state to jump
+            anim.Play("Player_Jump", -1, 0f);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision) {
