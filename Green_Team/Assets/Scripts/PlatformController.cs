@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
-
-
-
-
-
     public Transform posA, posB;
     public int Speed;
     Vector2 targetPos;
