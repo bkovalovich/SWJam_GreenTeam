@@ -5,9 +5,18 @@ using UnityEngine;
 class PlayerAttackScript : ElementScript {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    public Vector2 projectileMotion;
+
+    public Sprite mud;
+    public Sprite fire;
+    public Sprite clay;
+
+    public Vector2 projectileDirection;
+    public float projectileSpeed;
+
+
     public float lifetime;
     private float currentLife;
+    private Camera cam;
     
     public static GameObject bullet;
     public static PlayerAttackScript Create(ElementType element, GameObject bullet, Transform firepoint) {
@@ -19,19 +28,30 @@ class PlayerAttackScript : ElementScript {
     }
     public void ChangeColor() {
         if (element == ElementType.Fire) {
+            gameObject.tag = "Fire";
             Debug.Log(element);
-            sr.material.color = Color.red;
+            sr.sprite = fire;
         } else if (element == ElementType.Mud) {
+            gameObject.tag = "Mud";
             Debug.Log(element);
-            sr.material.color = Color.black;
+            sr.sprite = mud;
+        }
+        else
+        {
+            gameObject.tag = "Clay";
+            Debug.Log(element);
+            sr.sprite = clay;
         }
     }
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     private void OnEnable() {
-        rb.AddForce(projectileMotion);
+        projectileDirection = CrosshairScript.crosshairPosition - transform.position;
+        rb.velocity =  projectileDirection.normalized * projectileSpeed;
+        Destroy(gameObject, 3f);
     }
     private void OnDisable() {
         //
@@ -39,4 +59,5 @@ class PlayerAttackScript : ElementScript {
     private void OnCollisionEnter2D(Collision2D collision) {
         //
     }
+
 }

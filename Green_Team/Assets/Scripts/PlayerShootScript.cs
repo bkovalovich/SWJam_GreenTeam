@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerShootScript : MonoBehaviour
 {
-    public Transform firePoint;//Where the weapon is used
+    public Transform fireFirePoint;//Where the weapon is used
+    public Transform mudFirePoint;
     protected float currentRechargeTime = 0f;//Determines current time between weapon uses
     [SerializeField] protected float rateOfFire;//How often the bullet can be fired
     //[SerializeField] private AudioSource fireSFX;
@@ -25,6 +26,10 @@ public class PlayerShootScript : MonoBehaviour
         shootMud = playerControls.Player.RightPressed;
         shootMud.Enable();
         shootMud.performed += ShootMudProjectile;
+        //Middle Click
+        shootClay = playerControls.Player.MiddlePressed;
+        shootClay.Enable();
+        shootClay.performed += ShootClayProjectile;
     }
     private void OnDisable() {
         shootFire.Disable();
@@ -37,9 +42,12 @@ public class PlayerShootScript : MonoBehaviour
     }
 
     public void ShootFireProjectile(InputAction.CallbackContext context) {
-        PlayerAttackScript.Create(ElementType.Fire, bullet, firePoint);
+        PlayerAttackScript.Create(ElementType.Fire, bullet, fireFirePoint);
     }
     public void ShootMudProjectile(InputAction.CallbackContext context) {
-        PlayerAttackScript.Create(ElementType.Mud, bullet, firePoint);
+        PlayerAttackScript.Create(ElementType.Mud, bullet, mudFirePoint);
+    }
+    public void ShootClayProjectile(InputAction.CallbackContext context) {
+        PlayerAttackScript.Create(ElementType.Clay, bullet, fireFirePoint);
     }
 }

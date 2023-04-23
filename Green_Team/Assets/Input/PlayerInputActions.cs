@@ -62,6 +62,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiddlePressed"",
+                    ""type"": ""Button"",
+                    ""id"": ""9afe762d-bcba-497a-8d46-f1afddf28540"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10afc274-c83a-486c-8bbe-48154369df24"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MiddlePressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -818,6 +838,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_LeftPressed = m_Player.FindAction("LeftPressed", throwIfNotFound: true);
         m_Player_RightPressed = m_Player.FindAction("RightPressed", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_MiddlePressed = m_Player.FindAction("MiddlePressed", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -893,6 +914,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LeftPressed;
     private readonly InputAction m_Player_RightPressed;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_MiddlePressed;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -901,6 +923,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @LeftPressed => m_Wrapper.m_Player_LeftPressed;
         public InputAction @RightPressed => m_Wrapper.m_Player_RightPressed;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @MiddlePressed => m_Wrapper.m_Player_MiddlePressed;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -922,6 +945,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @MiddlePressed.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddlePressed;
+                @MiddlePressed.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddlePressed;
+                @MiddlePressed.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddlePressed;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -938,6 +964,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @MiddlePressed.started += instance.OnMiddlePressed;
+                @MiddlePressed.performed += instance.OnMiddlePressed;
+                @MiddlePressed.canceled += instance.OnMiddlePressed;
             }
         }
     }
@@ -1098,6 +1127,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnLeftPressed(InputAction.CallbackContext context);
         void OnRightPressed(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnMiddlePressed(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
